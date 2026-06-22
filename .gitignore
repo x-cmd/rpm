@@ -1,0 +1,5 @@
+# createrepo_c working directory (created during metadata regeneration)
+/.repodata/
+
+# macOS
+.DS_Store

@@ -1,0 +1,8 @@
+[x-cmd]
+name=x-cmd - Bootstrap 1000+ command line tools in seconds
+baseurl=https://www.x-cmd.com/rpm/
+enabled=1
+# Metadata and packages are currently unsigned; enable gpgcheck / repo_gpgcheck
+# once a GPG key is published.
+gpgcheck=0
+repo_gpgcheck=0
