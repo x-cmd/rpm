@@ -1,0 +1,91 @@
+id: x-rpm-2-security
+
+<data>:
+  - name:
+      en: signing
+      cn: 签名
+    qa:
+      - id: is-repo-signed
+        question:
+          en: Is this RPM repo GPG-signed?
+          cn: 这个 RPM 仓库有 GPG 签名吗？
+        answer:
+          en: No. Today the repo is unsigned — `gpgcheck=0` and `repo_gpgcheck=0` are both set in `x-cmd.repo`. There is a published plan to enable them once a GPG key is announced.
+          cn: 没有。今天仓库未签名，`x-cmd.repo` 里 `gpgcheck=0` 和 `repo_gpgcheck=0` 都开着。有公开的计划：等 GPG key 发布后开启。
+        confidence: 9
+        reference:
+          - docs/2-security.en.md
+
+      - id: two-flags
+        question:
+          en: What's the difference between gpgcheck and repo_gpgcheck?
+          cn: gpgcheck 和 repo_gpgcheck 有什么区别？
+        answer:
+          en: `gpgcheck` skips the per-package signature inside each `.rpm` (rpm's built-in GPG on the header). `repo_gpgcheck` skips the signature on `repomd.xml` (the suite-level manifest). Both together block network MITM and repo compromise.
+          cn: `gpgcheck` 跳过每个 `.rpm` header 内的 GPG 签名（rpm 内置）。`repo_gpgcheck` 跳过 `repomd.xml` 的签名（suite 级 manifest）。两个加起来挡 MITM 和仓库被攻陷。
+        confidence: 9
+        reference:
+          - docs/2-security.en.md
+
+      - id: when-signing-coming
+        question:
+          en: When will the repo be GPG-signed?
+          cn: 仓库什么时候加 GPG 签名？
+        answer:
+          en: When the operator publishes a GPG key at a stable URL and announces it on the x-cmd blog + GitHub release. Tracking is in this page.
+          cn: 等操作员发布 GPG key 到稳定 URL，并在 x-cmd 博客 + GitHub release 公告。这一页会跟踪。
+        confidence: 8
+        reference:
+          - docs/2-security.en.md
+
+  - name:
+      en: verification
+      cn: 校验
+    qa:
+      - id: manual-rpm-kv
+        question:
+          en: How do I verify a download without adding the RPM source?
+          cn: 不加 RPM 源也能校验下载吗？
+        answer:
+          en: Yes. `rpm -Kv https://www.x-cmd.com/rpm/Packages/x-cmd_0.9.9_all.rpm` shows the digest + signature status in one call. Today just digest; after signing it also shows the key ID.
+          cn: 可以。`rpm -Kv https://www.x-cmd.com/rpm/Packages/x-cmd_0.9.9_all.rpm` 一条命令显示 digest 和签名状态。今天只有 digest；签名上线后还会显示 key ID。
+        confidence: 9
+        reference:
+          - docs/2-security.en.md
+
+      - id: verify-against-repomd
+        question:
+          en: How do I cross-check against repomd.xml?
+          cn: 怎么跟 repomd.xml 交叉对比？
+        answer:
+          en: Fetch `https://www.x-cmd.com/rpm/repodata/repomd.xml` — it references each metadata file's SHA-256. Follow the chain to verify primary.xml.gz's digest of the package file.
+          cn: 抓 `https://www.x-cmd.com/rpm/repodata/repomd.xml`——里面引用了每个元数据文件的 SHA-256。顺着链校验 primary.xml.gz 里包文件的 digest。
+        confidence: 9
+        reference:
+          - docs/2-security.en.md
+
+  - name:
+      en: risk
+      cn: 风险
+    qa:
+      - id: safe-for-production
+        question:
+          en: Is it safe to use on a production fleet?
+          cn: 生产集群能放心用吗？
+        answer:
+          en: Not blindly. The repo is unsigned, so an operator-account compromise or mirror compromise goes undetected. For production: either wait for signing, or pin the version and verify SHA-256 from a second channel on every deploy.
+          cn: 不能盲信。仓库未签名，操作员账号或镜像被攻陷都查不出来。生产环境：要么等签名上线，要么把版本 pin 死、每次部署都从另一渠道交叉对比 SHA-256。
+        confidence: 9
+        reference:
+          - docs/2-security.en.md
+
+      - id: replay-attack
+        question:
+          en: Could an attacker serve me an old, vulnerable .rpm?
+          cn: 攻击者能塞给我一个老的、有漏洞的 .rpm 吗？
+        answer:
+          en: With TLS-MITM, yes, today. After signing goes live, dnf's date check on `repomd.xml` plus the GPG signature blocks replay/downgrade.
+          cn: 今天如果有 TLS-MITM，是能的。签名上线后，dnf 对 `repomd.xml` 的日期检查 + GPG 签名一起挡住重放/降级。
+        confidence: 8
+        reference:
+          - docs/2-security.en.md

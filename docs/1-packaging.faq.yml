@@ -1,0 +1,91 @@
+id: x-rpm-1-packaging
+
+<data>:
+  - name:
+      en: building
+      cn: 构建
+    qa:
+      - id: minimum-spec
+        question:
+          en: What's the minimum spec file I need?
+          cn: spec 文件最少需要哪些字段？
+        answer:
+          en: Name, Version, Release, Summary, License, BuildArch=noarch, Requires, %description, %install, %files, %changelog. See `man rpm.spec` for the full schema.
+          cn: Name、Version、Release、Summary、License、BuildArch=noarch、Requires、%description、%install、%files、%changelog。完整字段看 `man rpm.spec`。
+        confidence: 9
+        reference:
+          - docs/1-packaging.en.md
+
+      - id: noarch-vs-arch
+        question:
+          en: When should I use `BuildArch: noarch`?
+          cn: 什么时候用 `BuildArch: noarch`？
+        answer:
+          en: When the package contains only shell scripts, configurations, or other arch-independent content. x-cmd is `noarch` for this reason. For native code, drop `BuildArch: noarch` and let rpmbuild auto-detect from /usr/lib/rpm/macros.
+          cn: 当包里只有 shell 脚本、配置或其他跟架构无关的内容时。x-cmd 是 `noarch`。原生代码别加 `BuildArch: noarch`，rpmbuild 会从 /usr/lib/rpm/macros 自动检测。
+        confidence: 9
+        reference:
+          - docs/1-packaging.en.md
+
+      - id: rpmbuild-no-macos
+        question:
+          en: rpmbuild isn't on macOS — what do I do?
+          cn: macOS 没 rpmbuild 怎么办？
+        answer:
+          en: Run it inside a Fedora container: `docker run --rm -v "$PWD:/repo" fedora:latest bash -lc 'dnf install -y rpm-build && rpmbuild -ba myapp.spec ...'`.
+          cn: 跑 Fedora 容器：`docker run --rm -v "$PWD:/repo" fedora:latest bash -lc 'dnf install -y rpm-build && rpmbuild -ba myapp.spec ...'`。
+        confidence: 9
+        reference:
+          - docs/1-packaging.en.md
+
+  - name:
+      en: metadata
+      cn: 元数据
+    qa:
+      - id: how-to-regen-repodata
+        question:
+          en: How do I regenerate repodata after adding an RPM?
+          cn: 加了 .rpm 后怎么重建 repodata？
+        answer:
+          en: `createrepo_c --general-compress-type=gz /repo` (or run it in a Fedora container if not local).
+          cn: `createrepo_c --general-compress-type=gz /repo`（本地没装就跑 Fedora 容器）。
+        confidence: 9
+        reference:
+          - docs/1-packaging.en.md
+
+      - id: why-gz-not-zstd
+        question:
+          en: Why gzip and not zstd for repodata?
+          cn: 为什么用 gzip 不用 zstd？
+        answer:
+          en: Classic `yum` on RHEL 7 cannot read zstd-compressed repodata. Gzip is the maximum-compatibility choice.
+          cn: 经典 RHEL 7 的 `yum` 不读 zstd 压缩的 repodata。Gzip 是兼容性最大的选择。
+        confidence: 8
+        reference:
+          - docs/1-packaging.en.md
+
+  - name:
+      en: serving
+      cn: 服务
+    qa:
+      - id: where-can-i-host
+        question:
+          en: Where can I host a yum/dnf repo?
+          cn: yum/dnf 仓库可以放哪里？
+        answer:
+          en: Any static HTTP server. GitHub Pages, nginx, S3 + CloudFront, or even `python3 -m http.server` for testing. dnf just does GETs against `baseurl` + repodata + Packages/.
+          cn: 任意静态 HTTP server。GitHub Pages、nginx、S3 + CloudFront，或测试时 `python3 -m http.server`。dnf 只对 `baseurl` + repodata + Packages/ 做 GET。
+        confidence: 9
+        reference:
+          - docs/1-packaging.en.md
+
+      - id: add-to-yum
+        question:
+          en: How do users add my repo to dnf?
+          cn: 用户怎么把仓库加到 dnf？
+        answer:
+          en: Two ways: drop a .repo file into `/etc/yum.repos.d/`, or run `sudo dnf config-manager --add-repo https://example.com/rpm/x-cmd.repo`.
+          cn: 两种：把 .repo 文件丢进 `/etc/yum.repos.d/`，或跑 `sudo dnf config-manager --add-repo https://example.com/rpm/x-cmd.repo`。
+        confidence: 9
+        reference:
+          - docs/0-install.en.md

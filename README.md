@@ -11,6 +11,9 @@ The package itself is built and released upstream at
 [x-cmd/release](https://github.com/x-cmd/release); this repo only mirrors the
 `.rpm` artifacts and maintains the repository metadata.
 
+The package is `noarch` (architecture-independent), so one flat layout
+serves every RPM-supported architecture.
+
 ---
 
 ## Install
@@ -69,14 +72,22 @@ x --version
 │   ├── <sha>-filelists.xml.gz
 │   └── <sha>-other.xml.gz
 ├── x-cmd.repo               # ready-to-use dnf/yum repo definition
-└── README.md
+├── README.md                # English README (GitHub renders)
+├── README.cn.md             # Chinese README (GitHub renders)
+├── SKILL.md                 # structural / organizational reference
+├── CONTRIBUTING.md          # maintainer runbook (release, signing, incidents)
+└── docs/                    # user-facing bilingual docs
+    ├── 0-install.{md,cn.md,en.md,llms.md,faq.yml}
+    ├── 1-packaging.{md,cn.md,en.md,llms.md,faq.yml}
+    ├── 2-security.{md,cn.md,en.md,llms.md,faq.yml}
+    └── 3-stats.{md,cn.md,en.md,llms.md,faq.yml}
 ```
 
 `baseurl` is the repository root, so the package `<location href>` is the
 relative path `Packages/x-cmd_0.9.9_all.rpm`.
 
-The package is architecture-independent (`noarch`), so a single flat layout
-serves every architecture.
+The package is `noarch`, so a single flat layout serves every
+architecture — distinct from Debian's per-arch `Packages` indices.
 
 ---
 
@@ -87,24 +98,52 @@ serves every architecture.
    macOS, so run it through a container:
 
    ```sh
-   docker run --rm -v "$PWD:/repo" debian:latest bash -lc '
-     apt-get update -qq &&
-     apt-get install -y -qq --no-install-recommends createrepo_c >/dev/null &&
+   docker run --rm -v "$PWD:/repo" fedora:latest bash -lc '
+     dnf install -y createrepo_c >/dev/null &&
      createrepo_c --general-compress-type=gz --basedir /repo /repo'
    ```
 
    Metadata is gzip-compressed (`--general-compress-type=gz`) for maximum
    client compatibility (classic `yum` on RHEL 7 cannot read zstd metadata).
 
-3. Commit `Packages/*.rpm`, the updated `repodata/`, and push. The site
-   refreshes from this branch.
+3. Update `docs/3-stats.{md,cn.md,en.md,llms.md,faq.yml}` with the new
+   version and size.
+
+4. Commit `Packages/*.rpm`, the updated `repodata/`, the docs, and push. The
+   site refreshes from this branch.
 
 ---
 
 ## Notes
 
-- Packages and metadata are currently **unsigned** (`gpgcheck=0`). Enable GPG
-  signing once a key is published.
+- Packages and metadata are currently **unsigned** (`gpgcheck=0`,
+  `repo_gpgcheck=0`). Enable GPG signing once a key is published —
+  see [`CONTRIBUTING.md`](./CONTRIBUTING.md) for the procedure.
 - Source RPM and build provenance live in
   [x-cmd/release](https://github.com/x-cmd/release).
 - License of the x-cmd package: Apache-2.0.
+- Companion APT repository: [x-cmd/deb](https://github.com/x-cmd/deb) →
+  `https://www.x-cmd.com/deb/`.
+- Bilingual docs convention mirrors [x-cmd/cve](https://github.com/x-cmd/cve)
+  and the sibling [x-cmd/deb](https://github.com/x-cmd/deb).
+
+---
+
+## Documentation
+
+User-facing docs live under `docs/`, mirroring the
+[x-cmd/cve](https://github.com/x-cmd/cve) convention:
+
+| File | Purpose |
+| --- | --- |
+| `docs/0-install.{md,cn.md,en.md,llms.md,faq.yml}` | Install via dnf / yum / zypper |
+| `docs/1-packaging.{md,cn.md,en.md,llms.md,faq.yml}` | Build your own `.rpm` and host it |
+| `docs/2-security.{md,cn.md,en.md,llms.md,faq.yml}` | `gpgcheck=0` reality + GPG signing plan |
+| `docs/3-stats.{md,cn.md,en.md,llms.md,faq.yml}` | Snapshot of what the repo currently publishes |
+
+Each topic has 5 file variants:
+- `.md` — root language version (English by convention)
+- `.cn.md` — Chinese version
+- `.en.md` — explicit English (mirrors `.md`)
+- `.llms.md` — LLM-friendly structured data
+- `.faq.yml` — FAQ structured data with confidence + references

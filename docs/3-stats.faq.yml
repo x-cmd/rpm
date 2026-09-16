@@ -1,0 +1,65 @@
+id: x-rpm-3-stats
+
+<data>:
+  - name:
+      en: contents
+      cn: 内容
+    qa:
+      - id: whats-published
+        question:
+          en: What does this repo currently publish?
+          cn: 这个仓库现在对外发布什么？
+        answer:
+          en: One noarch RPM (`x-cmd 0.9.9`) plus `repodata/` (repomd.xml + primary/filelists/other .xml.gz). Flat layout.
+          cn: 一个 noarch RPM（`x-cmd 0.9.9`）加 `repodata/`（repomd.xml + primary/filelists/other .xml.gz）。扁平布局。
+        confidence: 9
+        reference:
+          - docs/3-stats.en.md
+
+      - id: noarch-vs-arch
+        question:
+          en: Why no per-architecture directories?
+          cn: 为什么没有 per-architecture 子目录？
+        answer:
+          en: x-cmd is `noarch` — one RPM serves every architecture (x86_64, aarch64, ppc64le, s390x, etc.). Per-arch splitting is only needed for native binaries.
+          cn: x-cmd 是 `noarch`——一份 RPM 服务所有架构（x86_64、aarch64、ppc64le、s390x 等）。per-arch 拆分只对原生二进制有意义。
+        confidence: 9
+        reference:
+          - docs/3-stats.en.md
+
+      - id: download-stats
+        question:
+          en: Are there download counts for this repo?
+          cn: 这个仓库有下载量统计吗？
+        answer:
+          en: No — it's a static mirror with no analytics. For adoption proxy, check the upstream x-cmd project on GitHub (stars, releases).
+          cn: 没有——纯静态镜像，没分析层。要看代理人气，看 GitHub 上游 x-cmd 项目的 stars、releases。
+        confidence: 9
+        reference:
+          - docs/3-stats.en.md
+
+  - name:
+      en: fetching
+      cn: 拉取
+    qa:
+      - id: fetch-repomd
+        question:
+          en: How do I fetch the repomd.xml?
+          cn: 怎么抓 repomd.xml？
+        answer:
+          en: `curl -fsSL https://www.x-cmd.com/rpm/repodata/repomd.xml` — entry point to all metadata files.
+          cn: `curl -fsSL https://www.x-cmd.com/rpm/repodata/repomd.xml`——所有元数据的入口。
+        confidence: 9
+        reference:
+          - docs/3-stats.en.md
+
+      - id: fetch-rpm-directly
+        question:
+          en: How do I fetch the .rpm directly?
+          cn: 怎么直接抓 .rpm？
+        answer:
+          en: `curl -fsSLO https://www.x-cmd.com/rpm/Packages/x-cmd_0.9.9_all.rpm`. Verify with `rpm -Kv` or `sha256sum -c`.
+          cn: `curl -fsSLO https://www.x-cmd.com/rpm/Packages/x-cmd_0.9.9_all.rpm`，用 `rpm -Kv` 或 `sha256sum -c` 校验。
+        confidence: 9
+        reference:
+          - docs/3-stats.en.md
