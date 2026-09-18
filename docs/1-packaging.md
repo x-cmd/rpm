@@ -42,6 +42,34 @@ For `noarch` packages, the payload contains shell / scripts
 and metadata — not native binaries — so one RPM serves every
 architecture.
 
+---
+
+## Why noarch — and why this RPM is just the source tree
+
+x-cmd ships as a `noarch` RPM for two compounding reasons that,
+together, make the package *literally* a copy of the source code
+wrapped in a cpio payload.
+
+**1. The runtime is the shell itself.** x-cmd is a pure POSIX
+shell library, written at the source level to run on `bash`,
+`dash`, `ash`, and `zsh` without rewriting. There is no C, no Go,
+no Python, no bytecode — just `.sh` files, a few `.1` manpages,
+and the assets they read. Whatever shell the target system
+already has is the only interpreter the package needs.
+
+**2. There is no build step.** The "build" of an x-cmd RPM is
+just `install -m 0644` of the source tree into `%{buildroot}`.
+No `make`, no `configure`, no transpiler, no cross-compilation
+matrix. The same `.spec`'s `%install` section produces the
+correct payload for `x86_64`, `aarch64`, `ppc64le`, `s390x`,
+and every other RPM-supported architecture.
+
+The result: the payload of `x-cmd_<ver>_all.rpm` is the source
+tree itself, byte-for-byte. A user who `rpm2cpio`s the package
+and untars the result sees the same `.sh` files a contributor
+sees in the upstream repo. One artifact, every architecture,
+no hidden binary.
+
 ## 1. Lay out the source tree
 
 RPMs build from a `BUILDROOT` — a flat directory tree

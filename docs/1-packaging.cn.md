@@ -37,6 +37,31 @@ x-cmd_0.9.9_all.rpm =
 
 `noarch` 包的 payload 是 shell / 脚本——一份 RPM 服务所有架构。
 
+---
+
+## 为什么是 noarch —— 以及为什么这个 RPM 就是源码本身
+
+x-cmd 打成 `noarch` 包是两条理由叠加的结果，叠加之后，**包体
+里装的就是源代码本身**——外面再裹一层 cpio。
+
+**1. 运行时就是 shell 本身。** x-cmd 是一个纯 POSIX shell 库，
+源码层面就写死在 `bash` / `dash` / `ash` / `zsh` 都能直接跑
+（不靠 bashism、不靠 zsh 特性）。**没有** C、没有 Go、没有
+Python、没有字节码——只有 `.sh` 文件、几份 `.1` manpage、以
+及脚本读的资源。目标系统上装的是哪个 shell，就是这个包唯一
+需要的解释器。
+
+**2. 没有 build 步骤。** x-cmd RPM 的"构建"就是 `install -m
+0644` 把源码树拷进 `%{buildroot}`。没有 `make`、没有
+`configure`、没有转译器、没有交叉编译矩阵。同一份 `.spec` 的
+`%install` 段，对 `x86_64`、`aarch64`、`ppc64le`、`s390x`
+以及所有 RPM 支持的架构，产出完全相同的 payload。
+
+合起来的结果是：`x-cmd_<ver>_all.rpm` 解出来，文件树和上游仓
+库里看到的源码树**逐字节相同**。用户 `rpm2cpio` 再解开，看到
+的就是贡献者在上游仓库里看到的那份 `.sh`。一份产物，所有架
+构，没有藏起来的二进制。
+
 ## 1. 摆源码树
 
 RPM 从 `BUILDROOT` 编译——一个扁平目录树映射装好之后的系统：
