@@ -14,8 +14,8 @@ id: x-rpm-0-install
           cn: 官方 x-cmd RPM（Red Hat / Fedora / SUSE）仓库，提供 x-cmd `noarch` 包。地址：https://www.x-cmd.com/rpm/。
         confidence: 9
         reference:
-          - docs/0-install.en.md
-          - docs/0-install.cn.md
+          - docs/0-install/en.md
+          - docs/0-install/cn.md
 
       - id: how-do-i-install
         question:
@@ -26,7 +26,7 @@ id: x-rpm-0-install
           cn: `sudo dnf install -y dnf-plugins-core && sudo dnf config-manager --add-repo https://www.x-cmd.com/rpm/x-cmd.repo && sudo dnf install -y x-cmd`。
         confidence: 9
         reference:
-          - docs/0-install.en.md
+          - docs/0-install/en.md
 
       - id: zypper-install
         question:
@@ -37,7 +37,7 @@ id: x-rpm-0-install
           cn: `sudo zypper ar -f https://www.x-cmd.com/rpm/ x-cmd && sudo zypper refresh && sudo zypper in x-cmd`。
         confidence: 9
         reference:
-          - docs/0-install.en.md
+          - docs/0-install/en.md
 
   - name:
       en: verification
@@ -52,7 +52,7 @@ id: x-rpm-0-install
           cn: 跑 `x --version`，应该看到 `0.9.9` 或更新版本。
         confidence: 9
         reference:
-          - docs/0-install.en.md
+          - docs/0-install/en.md
 
       - id: rpm-verify
         question:
@@ -63,7 +63,7 @@ id: x-rpm-0-install
           cn: `rpm -Kv https://www.x-cmd.com/rpm/Packages/x-cmd_0.9.9_all.rpm` 显示 digest + 签名状态。今天无签名；签名上线后会显示 key ID。
         confidence: 9
         reference:
-          - docs/0-install.en.md
+          - docs/0-install/en.md
 
   - name:
       en: troubleshooting
@@ -78,7 +78,7 @@ id: x-rpm-0-install
           cn: 今天是的——`gpgcheck=0` 是显式 opt-in。仓库公开声明。要真签名，等 GPG key 上线（在 2-security 跟踪）。
         confidence: 9
         reference:
-          - docs/2-security.en.md
+          - docs/2-security/en.md
 
       - id: noarch-vs-arch
         question:
@@ -89,7 +89,7 @@ id: x-rpm-0-install
           cn: x-cmd 是 `noarch`，x86_64、aarch64 等都装同一个 .rpm。
         confidence: 9
         reference:
-          - docs/0-install.en.md
+          - docs/0-install/en.md
 
       - id: dnf-vs-yum
         question:
@@ -104,4 +104,4 @@ id: x-rpm-0-install
             同一个仓库支持三种——同一份 `x-cmd.repo` 文件，同一个 `baseurl`。
         confidence: 9
         reference:
-          - docs/0-install.en.md
+          - docs/0-install/en.md

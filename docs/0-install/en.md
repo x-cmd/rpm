@@ -94,7 +94,7 @@ aarch64, etc.
 The repository is currently **unsigned** — `x-cmd.repo`
 declares `gpgcheck=0` and `repo_gpgcheck=0`. There is no
 release GPG key published yet. This is a known gap; see
-[Security](./2-security.en.md) for the plan to enable signed
+[Security](../2-security/en.md) for the plan to enable signed
 metadata once the key is announced.
 
 `gpgcheck=0` is opt-in acceptance of unsigned packages. **Drop
@@ -124,11 +124,11 @@ sudo dnf update x-cmd
 ## Next steps
 
 - Want to package your own `.rpm` for distribution via dnf /
-  yum / zypper? See [Packaging](./1-packaging.en.md).
+  yum / zypper? See [Packaging](../1-packaging/en.md).
 - Want to understand the signing plan and what changes once
-  we publish a GPG key? See [Security](./2-security.en.md).
+  we publish a GPG key? See [Security](../2-security/en.md).
 - Curious about what the repo currently publishes (versions,
-  checksums, architectures)? See [Stats](./3-stats.en.md).
+  checksums, architectures)? See [Stats](../3-stats/en.md).
 
 Source: [`README.md`](../../README.md),
 [`x-cmd.repo`](../../x-cmd.repo),

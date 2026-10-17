@@ -151,11 +151,11 @@ landing page.
 ## Next steps
 
 - Want to know how those files get generated? See
-  [Packaging](./1-packaging.md).
+  [Packaging](../1-packaging/en.md).
 - Want to know what the security model promises today? See
-  [Security](./2-security.md).
+  [Security](../2-security/en.md).
 
 Source: [`repodata/repomd.xml`](../../repodata/repomd.xml),
-[`repodata/primary.xml.gz`](../../repodata/primary.xml.gz),
+[`repodata/primary.xml.gz`](../../repodata/b7faf596ebb1c2510ba2cf8082b84e0ec1dc4b1a77fa2d15047a72a3b2c29c50-primary.xml.gz),
 and [`Packages/x-cmd_0.9.9_all.rpm`](../../Packages/x-cmd_0.9.9_all.rpm)
 as of the commit pinned in `git log`.

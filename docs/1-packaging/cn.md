@@ -219,8 +219,8 @@ repo_gpgcheck=0
 
 ## 下一步
 
-- 想给仓库加 GPG 签名？看 [安全](./2-security.cn.md)。
-- 想看本仓库对外的标准布局？看 [统计](./3-stats.cn.md)。
+- 想给仓库加 GPG 签名？看 [安全](../2-security/cn.md)。
+- 想看本仓库对外的标准布局？看 [统计](../3-stats/cn.md)。
 
 数据源：本仓库的 [`README.cn.md`](../../README.cn.md) 及上游
 Fedora packaging guide。

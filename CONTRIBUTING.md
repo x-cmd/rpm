@@ -39,7 +39,7 @@
    `--general-compress-type=gz` keeps metadata gzip-compressed
    for RHEL 7 `yum` compatibility.
 
-4. **Update `docs/3-stats.{md,cn.md,en.md,llms.md,faq.yml}`** with the
+4. **Update `docs/3-stats/` (en.md, cn.md, llms.md, faq.yml)** with the
    new version, size, and checksums.
 
 5. **Sanity-check the diff**:
@@ -51,14 +51,13 @@
    - One new `.rpm` in `Packages/`.
    - Updated `repomd.xml` and three `<sha>-*.xml.gz` files
      in `repodata/`.
-   - `docs/3-stats.*` reflects the new version.
+   - `docs/3-stats/` reflects the new version.
 
 6. **Commit + push**:
    ```sh
    git add Packages/x-cmd_<version>-<release>.noarch.rpm \
           repodata \
-          docs/3-stats.* \
-          docs/3-stats.faq.yml
+          docs/3-stats
    git commit -m "release: x-cmd <version>"
    git push
    ```
@@ -136,7 +135,7 @@ sub-key with an expiry.
    rpm --import https://www.x-cmd.com/rpm/RPM-GPG-KEY-x-cmd
    ```
 
-6. **Update `docs/2-security.{md,cn.md,en.md,llms.md,faq.yml}`**
+6. **Update `docs/2-security/` (all four files)**
    — flip all rows to ✅, remove the `gpgcheck=0` rationale.
 
 7. **Announce** on the x-cmd blog and a GitHub release.

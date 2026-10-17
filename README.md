@@ -77,10 +77,10 @@ x --version
 ├── SKILL.md                 # structural / organizational reference
 ├── CONTRIBUTING.md          # maintainer runbook (release, signing, incidents)
 └── docs/                    # user-facing bilingual docs
-    ├── 0-install.{md,cn.md,en.md,llms.md,faq.yml}
-    ├── 1-packaging.{md,cn.md,en.md,llms.md,faq.yml}
-    ├── 2-security.{md,cn.md,en.md,llms.md,faq.yml}
-    └── 3-stats.{md,cn.md,en.md,llms.md,faq.yml}
+    ├── 0-install/           # en.md, cn.md, llms.md, faq.yml per slot
+    ├── 1-packaging/
+    ├── 2-security/
+    └── 3-stats/
 ```
 
 `baseurl` is the repository root, so the package `<location href>` is the
@@ -106,7 +106,7 @@ architecture — distinct from Debian's per-arch `Packages` indices.
    Metadata is gzip-compressed (`--general-compress-type=gz`) for maximum
    client compatibility (classic `yum` on RHEL 7 cannot read zstd metadata).
 
-3. Update `docs/3-stats.{md,cn.md,en.md,llms.md,faq.yml}` with the new
+3. Update `docs/3-stats/` (en.md, cn.md, llms.md, faq.yml) with the new
    version and size.
 
 4. Commit `Packages/*.rpm`, the updated `repodata/`, the docs, and push. The
@@ -136,14 +136,12 @@ User-facing docs live under `docs/`, mirroring the
 
 | File | Purpose |
 | --- | --- |
-| `docs/0-install.{md,cn.md,en.md,llms.md,faq.yml}` | Install via dnf / yum / zypper |
-| `docs/1-packaging.{md,cn.md,en.md,llms.md,faq.yml}` | Build your own `.rpm` and host it |
-| `docs/2-security.{md,cn.md,en.md,llms.md,faq.yml}` | `gpgcheck=0` reality + GPG signing plan |
-| `docs/3-stats.{md,cn.md,en.md,llms.md,faq.yml}` | Snapshot of what the repo currently publishes |
+| `docs/0-install/` | Install via dnf / yum / zypper |
+| `docs/1-packaging/` | Build your own `.rpm` and host it |
+| `docs/2-security/` | `gpgcheck=0` reality + GPG signing plan |
+| `docs/3-stats/` | Snapshot of what the repo currently publishes |
 
-Each topic has 5 file variants:
-- `.md` — root language version (English by convention)
-- `.cn.md` — Chinese version
-- `.en.md` — explicit English (mirrors `.md`)
-- `.llms.md` — LLM-friendly structured data
-- `.faq.yml` — FAQ structured data with confidence + references
+Each topic is a slot folder with a 4-tuple — `en.md`, `cn.md`, `llms.md`
+(LLM-friendly structured data), `faq.yml` (FAQ structured data with
+confidence + references). The slot name is carried by the folder, not the
+files inside.

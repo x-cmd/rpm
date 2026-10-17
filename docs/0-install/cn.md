@@ -87,7 +87,7 @@ x86_64、aarch64 等不同架构上装同一份产物。
 
 仓库目前**未签名**——`x-cmd.repo` 声明 `gpgcheck=0` 和
 `repo_gpgcheck=0`。还没有公开发布的 release GPG key。这是
-已知的缺口；见 [安全](./2-security.cn.md) 里有 key 发布后
+已知的缺口；见 [安全](../2-security/cn.md) 里有 key 发布后
 开启签名元数据的计划。
 
 `gpgcheck=0` 是对未签名包的光学接收。**key 发布后要去掉**。
@@ -116,10 +116,10 @@ sudo dnf update x-cmd
 ## 下一步
 
 - 想自己打包 `.rpm` 通过 dnf / yum / zypper 分发？看
-  [打包](./1-packaging.cn.md)。
-- 想了解签名计划、上线后改什么？看 [安全](./2-security.cn.md)。
+  [打包](../1-packaging/cn.md)。
+- 想了解签名计划、上线后改什么？看 [安全](../2-security/cn.md)。
 - 想看仓库目前对外发布什么（版本、checksum、架构）？
-  看 [统计](./3-stats.cn.md)。
+  看 [统计](../3-stats/cn.md)。
 
 数据源：[`README.md`](../../README.md)、
 [`x-cmd.repo`](../../x-cmd.repo)、

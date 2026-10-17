@@ -142,11 +142,11 @@ curl -fsSLO https://www.x-cmd.com/rpm/Packages/x-cmd_0.9.9_all.rpm
 
 ## 下一步
 
-- 想看这些文件怎么生成？看 [打包](./1-packaging.cn.md)
-- 想看安全模型今天承诺什么？看 [安全](./2-security.cn.md)
+- 想看这些文件怎么生成？看 [打包](../1-packaging/cn.md)
+- 想看安全模型今天承诺什么？看 [安全](../2-security/cn.md)
 
 数据源：
 [`repodata/repomd.xml`](../../repodata/repomd.xml)、
-[`repodata/primary.xml.gz`](../../repodata/primary.xml.gz)、
+[`repodata/primary.xml.gz`](../../repodata/b7faf596ebb1c2510ba2cf8082b84e0ec1dc4b1a77fa2d15047a72a3b2c29c50-primary.xml.gz)、
 [`Packages/x-cmd_0.9.9_all.rpm`](../../Packages/x-cmd_0.9.9_all.rpm)
 截至 `git log` 锁定的提交。

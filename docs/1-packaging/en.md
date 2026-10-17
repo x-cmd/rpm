@@ -251,9 +251,9 @@ This is the exact pattern this repo uses — see
 ## Next steps
 
 - Want to add GPG signing to the resulting repo? See
-  [Security](./2-security.md).
+  [Security](../2-security/en.md).
 - Want to publish a one-liner mirror alongside the repo?
-  See [Stats](./3-stats.md) for the canonical layout this
+  See [Stats](../3-stats/en.md) for the canonical layout this
   repo exposes.
 
 Source: this repo's [`README.md`](../../README.md) and the

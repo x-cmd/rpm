@@ -14,7 +14,7 @@ id: x-rpm-1-packaging
           cn: Name、Version、Release、Summary、License、BuildArch=noarch、Requires、%description、%install、%files、%changelog。完整字段看 `man rpm.spec`。
         confidence: 9
         reference:
-          - docs/1-packaging.en.md
+          - docs/1-packaging/en.md
 
       - id: noarch-vs-arch
         question:
@@ -25,7 +25,7 @@ id: x-rpm-1-packaging
           cn: 当包里只有 shell 脚本、配置或其他跟架构无关的内容时。x-cmd 是 `noarch`。原生代码别加 `BuildArch: noarch`，rpmbuild 会从 /usr/lib/rpm/macros 自动检测。
         confidence: 9
         reference:
-          - docs/1-packaging.en.md
+          - docs/1-packaging/en.md
 
       - id: rpmbuild-no-macos
         question:
@@ -36,7 +36,7 @@ id: x-rpm-1-packaging
           cn: 跑 Fedora 容器：`docker run --rm -v "$PWD:/repo" fedora:latest bash -lc 'dnf install -y rpm-build && rpmbuild -ba myapp.spec ...'`。
         confidence: 9
         reference:
-          - docs/1-packaging.en.md
+          - docs/1-packaging/en.md
 
   - name:
       en: metadata
@@ -51,7 +51,7 @@ id: x-rpm-1-packaging
           cn: `createrepo_c --general-compress-type=gz /repo`（本地没装就跑 Fedora 容器）。
         confidence: 9
         reference:
-          - docs/1-packaging.en.md
+          - docs/1-packaging/en.md
 
       - id: why-gz-not-zstd
         question:
@@ -62,7 +62,7 @@ id: x-rpm-1-packaging
           cn: 经典 RHEL 7 的 `yum` 不读 zstd 压缩的 repodata。Gzip 是兼容性最大的选择。
         confidence: 8
         reference:
-          - docs/1-packaging.en.md
+          - docs/1-packaging/en.md
 
   - name:
       en: serving
@@ -77,7 +77,7 @@ id: x-rpm-1-packaging
           cn: 任意静态 HTTP server。GitHub Pages、nginx、S3 + CloudFront，或测试时 `python3 -m http.server`。dnf 只对 `baseurl` + repodata + Packages/ 做 GET。
         confidence: 9
         reference:
-          - docs/1-packaging.en.md
+          - docs/1-packaging/en.md
 
       - id: add-to-yum
         question:
@@ -88,4 +88,4 @@ id: x-rpm-1-packaging
           cn: 两种：把 .repo 文件丢进 `/etc/yum.repos.d/`，或跑 `sudo dnf config-manager --add-repo https://example.com/rpm/x-cmd.repo`。
         confidence: 9
         reference:
-          - docs/0-install.en.md
+          - docs/0-install/en.md

@@ -14,7 +14,7 @@ id: x-rpm-3-stats
           cn: 一个 noarch RPM（`x-cmd 0.9.9`）加 `repodata/`（repomd.xml + primary/filelists/other .xml.gz）。扁平布局。
         confidence: 9
         reference:
-          - docs/3-stats.en.md
+          - docs/3-stats/en.md
 
       - id: noarch-vs-arch
         question:
@@ -25,7 +25,7 @@ id: x-rpm-3-stats
           cn: x-cmd 是 `noarch`——一份 RPM 服务所有架构（x86_64、aarch64、ppc64le、s390x 等）。per-arch 拆分只对原生二进制有意义。
         confidence: 9
         reference:
-          - docs/3-stats.en.md
+          - docs/3-stats/en.md
 
       - id: download-stats
         question:
@@ -36,7 +36,7 @@ id: x-rpm-3-stats
           cn: 没有——纯静态镜像，没分析层。要看代理人气，看 GitHub 上游 x-cmd 项目的 stars、releases。
         confidence: 9
         reference:
-          - docs/3-stats.en.md
+          - docs/3-stats/en.md
 
   - name:
       en: fetching
@@ -51,7 +51,7 @@ id: x-rpm-3-stats
           cn: `curl -fsSL https://www.x-cmd.com/rpm/repodata/repomd.xml`——所有元数据的入口。
         confidence: 9
         reference:
-          - docs/3-stats.en.md
+          - docs/3-stats/en.md
 
       - id: fetch-rpm-directly
         question:
@@ -62,4 +62,4 @@ id: x-rpm-3-stats
           cn: `curl -fsSLO https://www.x-cmd.com/rpm/Packages/x-cmd_0.9.9_all.rpm`，用 `rpm -Kv` 或 `sha256sum -c` 校验。
         confidence: 9
         reference:
-          - docs/3-stats.en.md
+          - docs/3-stats/en.md

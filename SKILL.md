@@ -7,7 +7,7 @@ metadata: type=rpm-repository, scope=stable, refresh=daily-mirror, signed=no
 # x-cmd/rpm — repo organization reference
 
 > A structural map of this repository. Not a how-to-install
-> guide (that's in `README.md` / `README.cn.md` / `docs/0-install.*`).
+> guide (that's in `README.md` / `README.cn.md` / `docs/0-install/`).
 > This file is for an agent or maintainer coming back to the
 > repo and asking "where do I edit X?".
 
@@ -50,11 +50,11 @@ see the rest.
 | Add a new `.rpm` version | `Packages/x-cmd_<ver>-<rel>.noarch.rpm` (drop in), then regenerate metadata (see CONTRIBUTING.md) |
 | Update the repo snippet | `x-cmd.repo` |
 | Refresh the repodata | run `createrepo_c` (see CONTRIBUTING.md) → updates `repodata/` |
-| Change the user-facing install doc | `docs/0-install.{md,cn.md,en.md,llms.md,faq.yml}` |
-| Add a new docs topic | a new `docs/<n>-<topic>.{md,cn.md,en.md,llms.md,faq.yml}` set |
+| Change the user-facing install doc | `docs/0-install/` (en.md, cn.md, llms.md, faq.yml) |
+| Add a new docs topic | a new `docs/<n>-<topic>/` folder with the same 4-tuple |
 | Update English README | `README.md` |
 | Update Chinese README | `README.cn.md` |
-| Change the GPG key, signing, or `gpgcheck` policy | `CONTRIBUTING.md` (runbook) + `docs/2-security.*` (user-facing) |
+| Change the GPG key, signing, or `gpgcheck` policy | `CONTRIBUTING.md` (runbook) + `docs/2-security/` (user-facing) |
 | Fix a broken release | `CONTRIBUTING.md` → "Incident playbook" |
 
 ## Conventions
@@ -68,13 +68,13 @@ conventions. The short version:
 - **Single suite, noarch** — x-cmd is `noarch` so one RPM
   serves every architecture (x86_64, aarch64, ppc64le,
   s390x, etc.). No per-arch indices needed.
-- **Numbered prefix on docs topics** — `0-install`,
-  `1-packaging`, `2-security`, `3-stats`. Lower numbers lead.
-- **Five file variants per topic** —
-  `.md` (default = English), `.cn.md` (Chinese), `.en.md`
-  (explicit English), `.llms.md` (LLM-friendly structured),
-  `.faq.yml` (FAQ structured).
-- **YAML frontmatter** on every `.md` and `.llms.md`:
+- **Numbered slot folders** — `docs/0-install/`,
+  `docs/1-packaging/`, `docs/2-security/`, `docs/3-stats/`.
+  Lower numbers lead; the slot name is carried by the folder,
+  not the files inside.
+- **4-tuple per slot** — `en.md`, `cn.md`, `llms.md`
+  (LLM-friendly structured), `faq.yml` (FAQ structured).
+- **YAML frontmatter** on every article and `llms.md`:
   `x-title`, `x-desc`, `x-sidebar`, `x-keywords`, `x-json-ld`
   (TechArticle schema).
 - **Bilingual parity** — every English doc has a Chinese
@@ -86,11 +86,10 @@ conventions. The short version:
 
 ```
 docs/
-├── 0-install.{md, cn.md, en.md, llms.md, faq.yml}    # how to install x-cmd
-├── 1-packaging.{md, cn.md, en.md, llms.md, faq.yml}  # how to build .rpm + host repo
-├── 2-security.{md, cn.md, en.md, llms.md, faq.yml}   # gpgcheck=0 reality + GPG plan
-├── 3-stats.{md, cn.md, en.md, llms.md, faq.yml}      # current repo snapshot
-└── assets/                                            # images, badges (reserved)
+├── 0-install/    # how to install x-cmd        (en.md, cn.md, llms.md, faq.yml)
+├── 1-packaging/  # how to build .rpm + host repo
+├── 2-security/   # gpgcheck=0 reality + GPG plan
+└── 3-stats/      # current repo snapshot
 ```
 
 Each numbered topic covers one user question:
@@ -135,10 +134,10 @@ https://www.x-cmd.com/rpm/  (CDN — what dnf / yum / zypper hit)
 ## When in doubt
 
 - **The maintainer wants to cut a release** → `CONTRIBUTING.md`.
-- **The user wants to install x-cmd** → `docs/0-install.md`.
-- **Someone asks about signing/security** → `docs/2-security.md`.
-- **Someone asks "what's in this repo"** → `docs/3-stats.md`.
-- **Someone asks "how do I package my own"** → `docs/1-packaging.md`.
+- **The user wants to install x-cmd** → `docs/0-install/en.md`.
+- **Someone asks about signing/security** → `docs/2-security/en.md`.
+- **Someone asks "what's in this repo"** → `docs/3-stats/en.md`.
+- **Someone asks "how do I package my own"** → `docs/1-packaging/en.md`.
 
 ## Related repos
 
